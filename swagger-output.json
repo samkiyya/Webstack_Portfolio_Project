@@ -1,0 +1,5784 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "openapi": "3.0.0",
+    "title": "Book store ",
+    "description": "API documentation for managing books, orders, and sales reports and other . Powered by Swagger, prepared by Samuel Aberra",
+    "version": "1.0.0"
+  },
+ 
+ "servers": [
+    {
+      "url": "http://localhost:5000"
+    }
+  ],
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+
+
+    "/api/admin/logout": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Admin Logout",
+        "description": "This endpoint allows an admin to log out of the book store, invalidating their session token.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/login": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Admin Login",
+        "description": "This endpoint allows an admin to log in by providing their email and password. A valid token is returned upon successful authentication.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "abenibrando@hg.com"
+                },
+                "password": {
+                  "example": "aaaaaa"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/register": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Register a new admin",
+        "description": "This endpoint allows for the registration of a new admin account by providing necessary details such as email, password, first name, last name, and role the default one is moderator.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "abeni"
+                },
+                "password": {
+                  "example": "aaaa"
+                },
+                "fname": {
+                  "example": "yaa"
+                },
+                "lname": {
+                  "example": "anggy"
+                },
+                "role": {
+                  "example": "ADMIN"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/verify": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Verify admin token",
+        "description": "his endpoint verifies the provided authorization token for an admin user.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/get-all-admins": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Retrieve all admins",
+        "description": "This endpoint retrieves a list of all registered admin accounts.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/delete-admin/{id}": {
+      "delete": {
+        "tags": ["Admin"],
+        "summary": "Delete an admin account",
+        "description": "This endpoint allows for the deletion of an admin account by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/update-account": {
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Update admin account details",
+        "description": "This endpoint allows for updating the details of an existing admin account.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "fname": {
+                  "example": "anhgy"
+                },
+                "lname": {
+                  "example": "afhny"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/update-role/{id}": {
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Update an admin's role",
+        "description": "This endpoint allows for updating the role of a specific admin account by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "role": {
+                  "example": "ADMIN"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/change-password": {
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Change Admin Password",
+        "description": "This endpoint allows an admin to change their password by providing their old password and a new password.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "oldPassword": {
+                  "example": "an343y"
+                },
+                "newPassword": {
+                  "example": "an4545y"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/forget-password": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Request Password Reset",
+        "description": "This endpoint allows an admin to request a password reset by providing their registered email address.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/reset-password": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Reset Password",
+        "description": "This endpoint allows an admin to reset their password using a new password.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/moderators": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get all moderators",
+        "description": "This endpoint retrieves a list of all moderators",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/my-profile": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get Admin Profile",
+        "description": "This endpoint retrieves the profile information of the currently logged-in admin.",
+  
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/my-referal": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get the referral information of the logged-in admin",
+        "description": "Retrieve the referral associated with the currently authenticated admin. This can include the referral code",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/user/register": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Register a new user",
+        "description": "This endpoint allows a new user to register by providing their email, password, and personal details. use formdata",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "abenibrando@gfg.com"
+                },
+                "password": {
+                  "example": "anygdf"
+                },
+                "fname": {
+                  "example": "anydg"
+                },
+                "lname": {
+                  "example": "aggny"
+                },
+                "phone": {
+                  "example": "093992440"
+                },
+                "city": {
+                  "example": "addis ababa"
+                },
+                "country": {
+                  "example": "ethiopia"
+                },
+                "role": {
+                  "example": "AUTHOR"
+                },
+                "bio": {
+                  "example": "anF GHHy"
+                },
+                "image": {
+                  "example": "an.png"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/user/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "User login",
+        "description": "This endpoint allows a user to log in by providing their email and password. A valid token is returned upon successful authentication.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "abenibrando@hg.com"
+                },
+                "password": {
+                  "example": "anyfgfd"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/user/logout": {
+      "post": {
+        "tags": ["User"],
+        "summary": "User Logout",
+        "description": "This endpoint allows a user to log out of their session, invalidating their authentication token.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/user/verify": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Verifies the current user's authentication status.",
+        "description": "Checks whether the user is authenticated by verifying their authorization token.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/user/verify/2fa": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Verifies two-factor authentication for a user.",
+        "description": "Verifies the provided 2FA code and user ID to ensure that the user has completed the two-factor authentication process.",
+        
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "verificationCode": {
+                  "example": "anhhny"
+                },
+                "user_id": {
+                  "example": "1"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/user/verify/account/{token}": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Verifies a user's account using a token.",
+        "description": "Confirms a users account using the provided verification token. This is usually sent to the users email.",
+        
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/user/change-password": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Changes the user's password.",
+        "description": "Allows a user to change their password by providing the old password and a new password.",
+      
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "oldPassword": {
+                  "example": "anjhhhy"
+                },
+                "newPassword": {
+                  "example": "anyhhh55"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/user/forgot-password": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Initiates the password recovery process.",
+        "description": "Sends a password recovery link to the provided email address.",
+    
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/user/reset-password/{token}": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Resets the user's password using a token.",
+        "description": "This endpoint allows a user to reset their password by providing a valid reset token and the new password.",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/user/sendme-verification-email": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Sends a verification email to the user.",
+        "description": "This endpoint sends a verification email to the specified email address to confirm or verify the users email.",
+        
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/user/toggle/2fa": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Toggles the user's two-factor authentication (2FA) status.",
+        "description": "This endpoint enables or disables two-factor authentication for the currently authenticated user based on their request.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/user/my-profile": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Retrieves the authenticated user's profile.",
+         "description": "This endpoint returns the profile details of the currently authenticated user.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/create": {
+      "post": {
+        "tags": ["Book"],
+        "summary": "Creates a new book entry.",
+        "description": "This endpoint allows an authenticated user to create a new book by providing details like title, author, price, and other book-related information.only user, use formdata",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "anffy"
+                },
+                "author": {
+                  "example": "anffy"
+                },
+                "price": {
+                  "example": "100"
+                },
+                "pages": {
+                  "example": "10"
+                },
+                "description": {
+                  "example": "any ffff"
+                },
+                "publicationYear": {
+                  "example": "1999"
+                },
+                "language": {
+                  "example": "amharic, afan oromo, eng"
+                },
+                "category_id": {
+                  "example": "1"
+                },
+                "pdf": {
+                  "example": "anv.pdf"
+                },
+                "pdfImage": {
+                  "example": "anmm.png"
+                },
+                "audio": {
+                  "example": "optional ass.mp3"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/get-all": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves a list of all books.",
+        "description": "This endpoint returns all available books for the authenticated user.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/filter": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Filters and retrieves books based on search criteria.",
+        "description": "This endpoint allows the authenticated user to filter books based on multiple criteria such as title, author, category, price range, etc.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string",
+            "description": "The authorization token of the authenticated user."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string",
+            "description": "Page number for pagination."
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "type": "string",
+            "description": "Number of items per page."
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "type": "string",
+            "description": "Filter books by title."
+          },
+          {
+            "name": "author",
+            "in": "query",
+            "type": "string",
+            "description": "Filter books by author."
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "type": "string",
+            "description": "Filter books by category."
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "type": "string",
+            "description": "Sort books by a specific field (e.g., title, price)."
+          },
+          {
+            "name": "publicationYear",
+            "in": "query",
+            "type": "string",
+            "description": "Filter books by publication year."
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "type": "string",
+            "description": "Filter books by language."
+          },
+          {
+            "name": "minPrice",
+            "in": "query",
+            "type": "string",
+            "description": "Filter books by minimum price."
+          },
+          {
+            "name": "maxPrice",
+            "in": "query",
+            "type": "string",
+            "description": "Filter books by maximum price."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/find/{id}": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves a book by its ID.",
+        "description": "This endpoint retrieves detailed information about a specific book by its ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/delete/{id}": {
+      "delete": {
+        "tags": ["Book"],
+        "summary": "Deletes a book by its ID.",
+        "description": "This endpoint allows an authenticated user to delete a specific book by providing its ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/most-sold": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves the most sold books.",
+        "description": "This endpoint returns a list of the most sold books.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/by-authors-id/{id}": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves books by author ID.",
+        "description": "This endpoint retrieves all books associated with a specific author based on the provided author ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/approved-by-author-id/{id}": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves approved books by author ID.",
+        "description": "This endpoint retrieves only the approved books associated with a specific author, based on the provided author ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/most-reviewed": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves the most reviewed books.",
+        "description": "This endpoint retrieves a list of the most reviewed books based on user feedback.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/top-rated": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves top-rated books.",
+        "description": "This endpoint retrieves a list of the highest rated books based on user ratings.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/between": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves books within a specific date range.",
+        "description": "This endpoint allows users to retrieve books that fall within a specific  date.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/today": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves books added today.",
+        "description": "This endpoint retrieves a list of books that were added to the book store today.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/last7days": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves books added in the last 7 days.",
+        "description": "This endpoint retrieves a list of books that were added to the book store in the last 7 days.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/logged-author-bystatus/{status}": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves books by logged-in author filtered by status.",
+        "description": "This endpoint retrieves books by the logged-in author filtered by a specific status (e.g., 'pending', 'approved', 'rejected').",
+        
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/by-status/{status}": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves books filtered by status.",
+        "description": "This endpoint retrieves books filtered by a specific status (e.g., 'pending', 'approved', 'rejected').",
+        
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/logged-author/{id}": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves books by logged-in author ID.",
+        "description": "This endpoint retrieves all books associated with the logged-in author, identified by their ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/recommendations": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves book recommendations.",
+        "description": "This endpoint provides book recommendations based on user preferences or previous interactions.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/update-status/{id}": {
+      "put": {
+        "tags": ["Book"],
+        "summary": "Updates the status of a book.",
+        "description": "This endpoint allows you to update the status of a book using its ID. ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/approve/{id}": {
+      "put": {
+        "tags": ["Book"],
+        "summary": "Approves a book.",
+        "description": "This endpoint is used to approve a book based on its ID.  provide a reason  in the request body if u want.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "example": "anjjjy"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/reject/{id}": {
+      "put": {
+        "tags": ["Book"],
+        "summary": "Rejects a book.",
+        "description": "This endpoint is used to reject a book based on its ID.  provide a reason for the rejection  in the request body.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "example": "ahkhhhhnly"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/allbooks-logged-author": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves all books of the logged-in author.",
+        "description": "This endpoint retrieves all books associated with the logged-in author",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/all-approved-books-logged-author": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves all approved books of the logged-in author.",
+        "description": "This endpoint retrieves only the approved books associated with the logged-in author.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/audio/{id}": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves the audio version of a book.",
+        "description": "This endpoint retrieves the audio file or details for a book based on book id.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/audio-for-logged-author/{id}": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieves the audio version of a book for the logged-in author.",
+        "description": "This endpoint retrieves the audio file or details for a book associated with the logged-in author, based on the book's ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/audio": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieve all audio books",
+        "description": "This endpoint retrieves a list of all available audio books.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/delete-audio/{id}": {
+      "delete": {
+        "tags": ["Book"],
+        "summary": "Delete an audio book",
+        "description": "This endpoint deletes an audio version of a book identified by its book id.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "audio_id": {
+                  "example": "1"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/audio-for-who-paid/{id}": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "Retrieve audio for paid users",
+        "description": "This endpoint retrieves the audio version of a book for users who have paid for it, identified by the book's id.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/upload-audio/{id}": {
+      "post": {
+        "tags": ["Book"],
+        "summary": "Upload an audio file for a book",
+        "description": "This endpoint allows uploading an audio file for a book identified by its book id. The uploaded file will be associated with the book. use formdata",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "episode": {
+                  "example": "any"
+                },
+                "audio": {
+                  "example": "abeni.mp3"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/book/update-book/{id}": {
+      "put": {
+        "tags": ["Book"],
+        "summary": "Update book details",
+        "description": "This endpoint allows updating the details of a book using its book id. You can update attributes like title, author, price, pages, description, publication year, and language.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "derto"
+                },
+                "author": {
+                  "example": "yismake"
+                },
+                "price": {
+                  "example": "100"
+                },
+                "pages": {
+                  "example": "200"
+                },
+                "description": {
+                  "example": "an kkkyll"
+                },
+                "publicationYear": {
+                  "example": "2005"
+                },
+                "language": {
+                  "example": "amharic, afan oromo, eng"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/category/get-all": {
+      "get": {
+        "tags": ["Category"],
+        "summary": "Get all categories",
+        "description": "This endpoint retrieves all available categories.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/category/by/{id}": {
+      "get": {
+        "tags": ["Category"],
+        "summary": "Get category by ID",
+        "description": "This endpoint retrieves a specific category by its ID. Authentication is required.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/category/create": {
+      "post": {
+        "tags": ["Category"],
+        "summary": "Create a new category",
+        "description": "This endpoint allows creating a new category. only admin...",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "lib weld"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/category/delete/{id}": {
+      "delete": {
+        "tags": ["Category"],
+        "summary": "Delete a category",
+        "description": "This endpoint deletes a category by its ID. only admin..",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/category/update/{id}": {
+      "put": {
+        "tags": ["Category"],
+        "summary": "Update category details",
+        "description": "This endpoint allows updating the details of an existing category identified by its ID. only admin.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "educational"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/comm/create": {
+      "post": {
+        "tags": ["Communication Management"],
+        "summary": "Create a communication record",
+        "description": "This endpoint creates a new communication record between the user and the admin, to talk how much service charge for book... . The message include service charges and a related book ID.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "example": "any"
+                },
+                "serviceCharge": {
+                  "example": "20 in percent"
+                },
+                "book_id": {
+                  "example": "1"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/comm/get-all": {
+      "get": {
+        "tags": ["Communication Management"],
+        "summary": "Get all communications",
+        "description": "This endpoint retrieves all communication records, only admin.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/comm/by/{id}": {
+      "get": {
+        "tags": ["Communication Management"],
+        "summary": "Get all communications",
+        "description": "This endpoint retrieves single communication record.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/comm/update/{id}": {
+      "put": {
+        "tags": ["Communication Management"],
+        "summary": "Update a communication record",
+        "description": "This endpoint allows updating a specific communication record by its ID, including the message, service charge, and agreement status. only admin",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "example": "any"
+                },
+                "serviceCharge": {
+                  "example": "any"
+                },
+                "isAgreed": {
+                  "example": "any"
+                },
+                "book_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/comm/delete-from-user/{id}": {
+      "delete": {
+        "tags": ["Communication Management"],
+        "summary": "Delete a communication record from user",
+        "description": "This endpoint deletes a specific communication record for a user.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/comm/delete/{id}": {
+      "delete": {
+        "tags": ["Communication Management"],
+        "summary": "Delete a communication record",
+        "description": "This endpoint deletes a communication record by its ID, from admin side.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/comm/notagreed": {
+      "get": {
+        "tags": ["Communication Management"],
+        "summary": "Get communications not agreed by the users",
+        "description": "This endpoint retrieves communication records where the users has not agreed.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/comm/logged-author": {
+      "get": {
+        "tags": ["Communication Management"],
+        "summary": "Get the logged-in author communication for book ",
+        "description": "This endpoint retrieves the logged-in author's information for book.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/comm/am-agreed/{id}": {
+      "put": {
+        "tags": ["Communication Management"],
+        "summary": "Mark communication as agreed",
+        "description": "This endpoint allows the user to mark a communication as agreed.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/comm/am-not-agreed/{id}": {
+      "put": {
+        "tags": ["Communication Management"],
+        "summary": "Mark communication as not agreed",
+        "description": "This endpoint allows the user to mark a specific communication as not agreed, including a reason for disagreement.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "example": "that is too much"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/following/follow": {
+      "post": {
+        "tags": ["Following Management"],
+        "summary": "Follow a user",
+        "description": "This endpoint allows the authenticated user to follow another user by their user ID.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "example": "3"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/following/unfollow": {
+      "post": {
+        "tags": ["Following Management"],
+        "summary": "Unfollow a user",
+        "description": "This endpoint allows the authenticated user to unfollow another user by their user ID.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/following/followers/{id}": {
+      "get": {
+        "tags": ["Following Management"],
+        "summary": "Get followers of a user",
+        "description": "This endpoint retrieves a list of followers for a given user by user ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/following/following/{id}": {
+      "get": {
+        "tags": ["Following Management"],
+        "summary": "Get users that the  user is following",
+        "description": "This endpoint retrieves a list of users that the  user is following, identified by user ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/following/myfollowers": {
+      "get": {
+       "tags": ["Following Management"],
+        "summary": "Get the authenticated user's followers",
+        "description": "This endpoint retrieves a list of followers for the authenticated user.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/following/amfollowing": {
+      "get": {
+        "tags": ["Following Management"],
+        "summary": "Get users authenticated user is following ",
+        "description": "This endpoint fetch users the authenticated user is  following.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/levels/create": {
+      "post": {
+        "tags": ["Levels Management"],
+        "summary": "Create a new level",
+        "description": "This endpoint allows an admin to create a new level by providing a name. only admin",
+        
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "gasha"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/levels/get-all": {
+      "get": {
+        "tags": ["Levels Management"],
+        "summary": "Get all levels",
+        "description": "This endpoint retrieves a list of all levels in the book store.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/levels/by/{id}": {
+      "get": {
+       "tags": ["Levels Management"],
+        "summary": "Get a level by ID",
+        "description": "This endpoint retrieves a specific level by its ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/levels/update/{id}": {
+      "put": {
+        "tags": ["Levels Management"],
+        "summary": "Update an existing level",
+        "description": "This endpoint allows the user to update the name of an existing level by providing the level's ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "jegna"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/levels/delete/{id}": {
+      "delete": {
+        "tags": ["Levels Management"],
+        "summary": "Delete a level",
+        "description": "This endpoint allows the user to delete a level by its ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/notification/my": {
+      "get": {
+        "tags": ["Notifications Management"],
+        "summary": "Get my notifications",
+        "description": "This endpoint retrieves all notifications for the authenticated user.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/notification/my/unread": {
+      "get": {
+        "tags": ["Notifications Management"],
+        "summary": "Get unread notifications",
+        "description": "This endpoint retrieves unread notifications for the authenticated user.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/notification/mark-as-read/{id}": {
+      "put": {
+        "tags": ["Notifications Management"],
+        "summary": "Mark notification as read",
+        "description": "This endpoint marks a specific notification as read by its ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/notification/all": {
+      "get": {
+        "tags": ["Notifications Management"],
+        "summary": "Get all notifications",
+        "description": "This endpoint retrieves all notifications in the system, including read and unread notifications. only admin",
+      
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/notification/by/{id}": {
+      "get": {
+        "tags": ["Notifications Management"],
+        "summary": "Get notification by ID",
+        "description": "This endpoint retrieves a specific notification by its ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/notification/delete/{id}": {
+      "delete": {
+        "tags": ["Notifications Management"],
+        "summary": "Delete notification",
+        "description": "This endpoint deletes a specific notification by its ID. only user",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/get-all": {
+      "get": {
+        "tags": ["Order Management"],
+        "summary": "Get all orders",
+        "description": "This endpoint retrieves a list of all orders placed in the book store.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/by-id/{id}": {
+      "get": {
+        "tags": ["Order Management"],
+        "summary": "Get order by ID",
+        "description": "This endpoint retrieves a specific order by its  ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/purchase/{id}": {
+      "post": {
+        "tags": ["Order Management"],
+        "summary": "Purchase an order",
+        "description": "This endpoint allows the user to purchase an order by providing transaction details. only user, use formdata",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "transactionNumber": {
+                  "example": "1000076555"
+                },
+                "bankName": {
+                  "example": "ahadu"
+                },
+                "receiptImage": {
+                  "example": "anykkkk.png"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/update-status/{id}": {
+      "put": {
+        "tags": ["Order Management"],
+        "summary": "Update order status",
+        "description": "This endpoint allows the user to update the status of an order by its unique ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "example": "approved"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/delete/{id}": {
+      "delete": {
+        "tags": ["Order Management"],
+        "summary": "Delete an order",
+        "description": "This endpoint deletes a specific order by its  ID. only admin",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/logged-user": {
+      "get": {
+        "tags": ["Order Management"],
+        "summary": "Get orders of the logged-in user",
+        "description": "This endpoint retrieves a list of orders placed by the logged-in user.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/approved-logged-user": {
+      "get": {
+        "tags": ["Order Management"],
+        "summary": "Get approved orders of the logged-in user",
+        "description": "This endpoint retrieves a list of approved orders placed by the logged-in user.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/for-book/{id}": {
+      "get": {
+        "tags": ["Order Management"],
+        "summary": "Get orders details for book by book id",
+        "description": "This endpoint retrieves the details of an order related to book by its  ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/last7days-approved": {
+      "get": {
+        "tags": ["Order Management"],
+        "summary": "Get approved orders from the last 7 days",
+        "description": "This endpoint retrieves a list of approved orders from the last 7 days.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/delete-unapproved/{id}": {
+      "delete": {
+        "tags": ["Order Management"],
+        "summary": "Delete an unapproved order",
+        "description": "This endpoint deletes an unapproved order by its  ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/approved-byuser/{id}": {
+      "get": {
+        "tags": ["Order Management"],
+        "summary": "Get approved orders by user ID",
+        "description": "This endpoint retrieves a list of approved orders associated with a specific user identified by user ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/byuser/{id}": {
+      "get": {
+        "tags": ["Order Management"],
+        "summary": "Get orders by user ID",
+        "description": "This endpoint retrieves all orders associated with a specific user identified by their  user ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/bystatus/{status}": {
+      "get": {
+        "tags": ["Order Management"],
+        "summary": "Get orders by status",
+        "description": "This endpoint retrieves orders based on their current status (e.g., 'pending', 'approved').",
+        
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/between": {
+      "get": {
+        "tags": ["Order Management"],
+        "summary": "Get all orders between two dates",
+        "description": "This endpoint retrieves all orders placed between two specified dates.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/approved-between": {
+      "get": {
+       "tags": ["Order Management"],
+        "summary": "Get approved orders between two dates",
+        "description": "This endpoint retrieves approved orders placed between two specified dates.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/today": {
+      "get": {
+        "tags": ["Order Management"],
+        "summary": "Get orders placed today",
+        "description": "This endpoint retrieves all orders that have been placed today.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/last7days": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/order/ordernumber/{orderNumber}": {
+      "get": {
+        "tags": ["Order Management"],
+        "summary": "Get orders placed in the last 7 days",
+        "description": "This endpoint retrieves all orders placed in the last 7 days.",
+        
+        "parameters": [
+          {
+            "name": "orderNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/promotion/create": {
+      "post": {
+        "tags": ["Promotion Management"],
+        "summary": "Create a new promotion",
+        "description": "This endpoint creates a new promotion by providing a title, description, and a URL. only admin",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "anygf"
+                },
+                "discription": {
+                  "example": "anff hhy"
+                },
+                "url": {
+                  "example": "http://abenibrando.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/promotion/get-all": {
+      "get": {
+        "tags": ["Promotion Management"],
+        "summary": "Get all promotions",
+        "description": "This endpoint retrieves a list of all promotions.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/promotion/by/{id}": {
+      "get": {
+        "tags": ["Promotion Management"],
+        "summary": "Get promotion by ID",
+        "description": "This endpoint retrieves a promotion by its ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/promotion/update/{id}": {
+      "put": {
+        "tags": ["Promotion Management"],
+        "summary": "Update promotion by ID",
+        "description": "This endpoint updates an existing promotion based on its ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "aaaa"
+                },
+                "discription": {
+                  "example": "abc gh"
+                },
+                "url": {
+                  "example": "http://abenibrando.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/promotion/delete/{id}": {
+      "delete": {
+        "tags": ["Promotion Management"],
+        "summary": "Delete promotion by ID",
+        "description": "This endpoint deletes a promotion based on its ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/review/create/{id}": {
+      "post": {
+        "tags": ["Review Management"],
+        "summary": "Create a review for a book",
+        "description": "This endpoint allows a user to create a review for a specific book by providing a comment and a rating. only user",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "example": "good"
+                },
+                "rating": {
+                  "example": "5"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/review/update/{id}": {
+      "put": {
+        "tags": ["Review Management"],
+        "summary": "Update a review",
+        "description": "This endpoint allows a user to update a previously created review for a specific book.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "example": "an hhy"
+                },
+                "rating": {
+                  "example": "5"
+                },
+                "book_id": {
+                  "example": "1"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/review/get-all": {
+      "get": {
+        "tags": ["Review Management"],
+        "summary": "Get all reviews",
+        "description": "This endpoint retrieves all reviews across the platform. only admin.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/review/delete/{id}": {
+      "delete": {
+        "tags": ["Review Management"],
+        "summary": "Delete a review by ID",
+        "description": "This endpoint deletes a specific review using its  ID. Authorization is required.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/review/by-userid/{id}": {
+      "get": {
+        "tags": ["Review Management"],
+        "summary": "Get reviews by user ID",
+        "description": "Retrieve all reviews written by a specific user identified by their  user ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/review/by-bookid/{id}": {
+      "get": {
+        "tags": ["Review Management"],
+        "summary": "Get reviews for a book by book ID",
+        "description": "Retrieve all reviews for a specific book using its  book ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/review/by/{id}": {
+      "get": {
+        "tags": ["Review Management"],
+        "summary": "Get a specific review by ID",
+        "description": "Retrieve a specific review using its ID. ",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/books/reports/bybookid/{id}": {
+      "get": {
+        "tags": ["Sales Reports"],
+        "summary": "Get sales report by book ID",
+        "description": "Retrieve the sales report for a specific book using its  ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/books/reports/logged-author": {
+      "get": {
+        "tags": ["Sales Reports"],
+        "summary": "Get sales report for logged author",
+        "description": "Retrieve the sales report for the logged-in author.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/books/reports/total-byauthorid/{id}": {
+      "get": {
+        "tags": ["Sales Reports"],
+        "summary": "Get total sales by author ID",
+        "description": "Retrieve the total sales of books by a specific author using the author's  ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/books/reports/top-books": {
+      "get": {
+        "tags": ["Sales Reports"],
+        "summary": "Get top-selling books",
+        "description": "Retrieve a list of the top-selling books across the platform.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/books/reports/top-sellers": {
+      "get": {
+        "tags": ["Sales Reports"],
+        "summary": "Get top sellers",
+        "description": "Retrieve the list of books that have sold the most units.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/books/reports/top-buyer": {
+      "get": {
+        "tags": ["Sales Reports"],
+        "summary": "Get top buyers by total money they spent on books",
+        "description": "Retrieve the total amount spent on all books by user  on the platform.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/books/reports/total": {
+      "get": {
+        "tags": ["Sales Reports"],
+        "summary": "Get total sales report",
+        "description": "Retrieve a  total sales report for all books.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/books/reports/last7days": {
+      "get": {
+        "tags": ["Sales Reports"],
+        "summary": "Get sales report for the last 7 days",
+        "description": "Retrieve the sales data for the past 7 days.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/books/reports/average": {
+      "get": {
+        "tags": ["Sales Reports"],
+        "summary": "Get average sales data",
+        "description": "Retrieve the average sales data across all books.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/books/reports/last-month": {
+      "get": {
+     "tags": ["Sales Reports"],
+        "summary": "Get sales report for the last month",
+        "description": "Retrieve the sales data for the previous month.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/books/reports/last-year": {
+      "get": {
+        "tags": ["Sales Reports"],
+        "summary": "Get sales report for the last year",
+        "description": "Retrieve the sales data for the previous year.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/books/reports/this-month": {
+      "get": {
+        "tags": ["Sales Reports"],
+        "summary": "Get sales report for this month",
+        "description": "Retrieve the sales data for the current month.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/books/reports/this-year": {
+      "get": {
+        "tags": ["Sales Reports"],
+        "summary": "Get sales report for this year",
+        "description": "Retrieve the sales data for the current year.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/books/reports/between": {
+      "get": {
+        "tags": ["Sales Reports"],
+        "summary": "Get sales report for a date range",
+        "description": "Retrieve sales data for books within a specific date range.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/auth/google": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Authenticate using Google",
+        "description": "Redirects the user to the Google authentication page.",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/auth/social/faied": {
+      "get": {
+    "tags": ["Authentication"],
+        "summary": "Failed social login",
+        "description": "This endpoint is called when social login fails.",
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/auth/google/callback": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Google authentication callback",
+        "description": "Callback endpoint for Google authentication after the user logs in.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/auth/facebook": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Authenticate using Facebook,  I didnt include the account for now",
+        "description": "Redirects the user to the Facebook authentication page.",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/auth/facebook/callback": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Facebook authentication callback",
+        "description": "Callback endpoint for Facebook authentication after the user logs in.",
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/sold-report/between": {
+      "get": {
+        "tags": ["Sold Reports"],
+        "summary": "Get sold reports for a date range",
+        "description": "Retrieve sold report data between a specified date range.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sold-report/get-totals": {
+      "get": {
+        "tags": ["Sold Reports"],
+        "summary": "Get total sold report",
+        "description": "Retrieve the total sold report across all books.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sold-report/get-all": {
+      "get": {
+        "tags": ["Sold Reports"],
+        "summary": "Get all sold reports",
+        "description": "Retrieve a list of all sold reports across the platform.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sold-report/by/{id}": {
+      "get": {
+      "tags": ["Sold Reports"],
+        "summary": "Get sold report by ID",
+        "description": "Retrieve a sold report for a specific item using its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sold-report/delete/{id}": {
+      "delete": {
+        "tags": ["Sold Reports"],
+        "summary": "Delete sold report by ID",
+        "description": "Delete a sold report by its  ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subscription/create": {
+      "post": {
+        "tags": ["Subscriptions"],
+        "summary": "Create a new subscription",
+        "description": "Create a new subscription plan with specified parameters.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "gebeta"
+                },
+                "limitCount": {
+                  "example": "32"
+                },
+                "price": {
+                  "example": "120"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subscription/update/{id}": {
+      "put": {
+        "tags": ["Subscriptions"],
+        "summary": "Update an existing subscription",
+        "description": "Update the details of an existing subscription using the subscription's  ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "new"
+                },
+                "limitCount": {
+                  "example": "12"
+                },
+                "price": {
+                  "example": "100"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subscription/get-all": {
+      "get": {
+        "tags": ["Subscriptions"],
+        "summary": "Get all subscriptions",
+        "description": "Retrieve a list of all subscription plans available.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subscription/delete/{id}": {
+      "delete": {
+        "tags": ["Subscriptions"],
+        "summary": "Delete subscription by ID",
+        "description": "Delete a subscription by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subscription/my/subscription": {
+      "get": {
+        "tags": ["Subscriptions"],
+        "summary": "Get current user's subscription",
+        "description": "Retrieve the current subscription of the logged-in user.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subscription/by-id/{id}": {
+      "get": {
+        "tags": ["Subscriptions"],
+        "summary": "Get a subscription order by its ID",
+        "description": "Retrieve the details of a subscription order using its  ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subscription-order/purchase": {
+      "post": {
+        "tags": ["Subscription Orders"],
+        "summary": "Purchase a new subscription",
+        "description": "Create a new subscription order with the specified subscription type. only user, use formdata",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subscriptionType": {
+                  "example": "yearly"
+                },
+                "receiptImage": {
+                  "example": "yea.png"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subscription-order/update-status/{id}": {
+      "put": {
+        "tags": ["Subscription Orders"],
+        "summary": "Update the status of a subscription order",
+        "description": "Change the status of an existing subscription order based on its ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subscription-order/get-all": {
+      "get": {
+        "tags": ["Subscription Orders"],
+        "summary": "Get all subscription orders",
+        "description": "Retrieve a list of all subscription orders.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subscription-order/by/{id}": {
+      "get": {
+        "tags": ["Subscription Orders"],
+        "summary": "Get a subscription order by its ID",
+        "description": "Retrieve the details of a subscription order using its  ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subscription-order/byorder-number/{orderNumber}": {
+      "get": {
+        "tags": ["Subscription Orders"],
+        "summary": "Get a subscription order by its order number",
+        "description": "Retrieve the subscription order using the order number.",
+        "parameters": [
+          {
+            "name": "orderNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subscription-order/reports": {
+      "get": {
+        "tags": ["Subscription Orders"],
+        "summary": "Get subscription order reports",
+        "description": "Retrieve a report for subscription orders.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subscription-order/bystatus/{status}": {
+      "get": {
+       "tags": ["Subscription Orders"],
+        "summary": "Get subscription orders by status",
+        "description": "Retrieve subscription orders filtered by their current status.",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subscription-order/between": {
+      "get": {
+        "tags": ["Subscription Orders"],
+        "summary": "Get subscription orders within a date range",
+        "description": "Retrieve subscription orders that were placed within a specified date range.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/manage-user/register-byreferal/{token}": {
+      "post": {
+        "tags": ["User Management"],
+        "summary": "Register a new user through a referral link",
+        "description": "Register a new user using a referral code. Use formdata",
+        
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "abenibrando@hg.com"
+                },
+                "password": {
+                  "example": "anjjjj"
+                },
+                "fname": {
+                  "example": "ddd"
+                },
+                "lname": {
+                  "example": "anyjjj"
+                },
+                "phone": {
+                  "example": "0939928200"
+                },
+                "city": {
+                  "example": "addis ababa"
+                },
+                "country": {
+                  "example": "ethiopia"
+                },
+                "role": {
+                  "example": "AUTHOR"
+                },
+                "bio": {
+                  "example": "anBB NNN"
+                },
+                "image": {
+                  "example": "anbb.png"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/manage-user/update-my-account": {
+      "put": {
+        "tags": ["User Management"],
+        "summary": "Update current user's account details",
+        "description": "Update the details of the currently authenticated user account.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "fname": {
+                  "example": "aaaa"
+                },
+                "lname": {
+                  "example": "anhhhy"
+                },
+                "phone": {
+                  "example": "093999222"
+                },
+                "bio": {
+                  "example": "an jjjy"
+                },
+                "city": {
+                  "example": "addis ababa"
+                },
+                "country": {
+                  "example": "kenya"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/manage-user/get-all-users": {
+      "get": {
+        "tags": ["User Management"],
+        "summary": "Get all users",
+        "description": "Retrieve a list of all registered users. only admin",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/manage-user/my-referal": {
+      "get": {
+        "tags": ["User Management"],
+        "summary": "Retrieve User's Referral Information",
+        "description": "This endpoint allows the authenticated user to retrieve their referral information,.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/manage-user/delete-my-account": {
+      "delete": {
+        "tags": ["User Management"],
+        "summary": "Delete User Account",
+        "description": "This endpoint allows the authenticated user to permanently delete their account and all associated data. This action cannot be undone.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/manage-user/filter-authors": {
+      "get": {
+        "tags": ["User Management"],
+        "summary": "Filter and Retrieve Authors",
+        "description": "This endpoint allows administrators or authorized users to filter authors by various criteria such as first name, last name, and sorting options. It supports pagination and sorting.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string",
+            "description": "Authentication token for the current user."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string",
+            "description": "Page number for pagination."
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "type": "string",
+            "description": "Number of authors per page."
+          },
+          {
+            "name": "fname",
+            "in": "query",
+            "type": "string",
+            "description": "Filter authors by first name."
+          },
+          {
+            "name": "lname",
+            "in": "query",
+            "type": "string",
+            "description": "Filter authors by last name."
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "type": "string",
+            "description": "Sort authors by a specified field (e.g., by name, by date)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/manage-user/filter-allusers": {
+      "get": {
+        "tags": ["User Management"],
+        "summary": "Filter and Retrieve All Users",
+        "description": "This endpoint allows administrators  to filter and retrieve a list of all users based on various criteria, including personal details, account status, role, and more. It supports pagination and sorting .",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string",
+            "description": "Authentication token for the current user."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string",
+            "description": "The page number for pagination."
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "type": "string",
+            "description": "The number of users per page."
+          },
+          {
+            "name": "fname",
+            "in": "query",
+            "type": "string",
+            "description": "Filter users by their first name."
+          },
+          {
+            "name": "lname",
+            "in": "query",
+            "type": "string",
+            "description": "Filter users by their last name."
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "type": "string",
+            "description": "Sort users by a specified field (e.g., name, points, date)."
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "type": "string",
+            "description": "Filter users by their city."
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "type": "string",
+            "description": "Filter users by their country."
+          },
+          {
+            "name": "point",
+            "in": "query",
+            "type": "string",
+            "description": "Filter users by points or activity score."
+          },
+          {
+            "name": "userInvited",
+            "in": "query",
+            "type": "string",
+            "description": "Filter users by the number of users they have invited."
+          },
+          {
+            "name": "referalCode",
+            "in": "query",
+            "type": "string",
+            "description": "Filter users by their referral code."
+          },
+          {
+            "name": "isTwoStepOn",
+            "in": "query",
+            "type": "string",
+            "description": "Filter users by whether their two-step authentication is enabled."
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "type": "string",
+            "description": "Filter users by their assigned role (e.g., user, author)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/manage-user/toggle/isactive/{id}": {
+      "put": {
+        "tags": ["User Management"],
+      "summary": "Toggle User Active Status",
+      "description": "This endpoint allows an admin to toggle the active status of a user account. The user can either be activated or deactivated.",
+      
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "isActive": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/manage-user/not-active-users": {
+      "get": {
+        "tags": ["User Management"],
+        "summary": "Retrieve Users with Inactive Accounts",
+        "description": "This endpoint retrieves a list of users whose accounts are marked as inactive. It allows administrators to monitor and manage user account status.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/manage-user/verified-users": {
+      "get": {
+        "tags": ["User Management"],
+        "summary": "Retrieve Verified Users",
+        "description": "This endpoint allows administrators to retrieve a list of users who have verified their accounts or email addresses.",
+        
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/manage-user/change-role/{id}": {
+      "put": {
+        "tags": ["User Management"],
+        "summary": "Change User Role",
+        "description": "This endpoint allows administrators to change the role of a user (e.g., from 'user' to 'author'). This helps in managing permissions and access control within the book store.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "role": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/manage-user/provider/{provider}": {
+      "get": {
+        "tags": ["User Management"],
+        "summary": "Retrieve User Data by Provider",
+        "description": "This endpoint allows you to retrieve information about users who registered or logged in via a specific third-party provider (e.g., Google, Facebook).",
+        
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/manage-user/send-email/{id}": {
+      "post": {
+        "tags": ["User Management"],
+      "summary": "Send Email to User",
+      "description": "This endpoint allows administrators to send custom emails to a specific user. Useful for notifying users of updates, warnings, or other important information.",
+      
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subject": {
+                  "example": "anggyh"
+                },
+                "text": {
+                  "example": "abbmbny"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/manage-user/get-user/{id}": {
+      "get": {
+        "tags": ["User Management"],
+        "summary": "Retrieve User by ID",
+        "description": "This endpoint allows you to retrieve detailed information about a specific user by user ID.",
+        
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}
