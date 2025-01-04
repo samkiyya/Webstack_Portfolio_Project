@@ -26,7 +26,7 @@ const subscriptionRoutes = require("./routes/subscriptionRoute");
 const subscriptionOrderRoutes = require("./routes/subsOrderRoute");
 const salesReport = require("./routes/salesReport");
 const levels = require("./routes/levelRoute");
-const accountRoute = require("./routes/accountRoute");
+// const accountRoute = require("./routes/accountRoute");
 const communicationRoute = require("./routes/communicationRoute");
 const notificationRoutes = require("./routes/notificationRoute");
 const promoRoute = require("./routes/promoRoute");
@@ -66,7 +66,7 @@ myPassportConfig();
 
 // Swagger documents
 const swaggerDocs = {
-  "/account-docs": require("./api-docs/account.json"),
+  // "/account-docs": require("./api-docs/account.json"),
   "/admin-docs": require("./api-docs/admin.json"),
   "/book-docs": require("./api-docs/book.json"),
   "/category-docs": require("./api-docs/category.json"),
@@ -129,7 +129,7 @@ app.use("/api/subscription", subscriptionRoutes);
 app.use("/api/subscription-order", subscriptionOrderRoutes);
 app.use("/api/sales/books", salesReport);
 app.use("/api/levels", levels);
-app.use("/api/account", accountRoute);
+// app.use("/api/account", accountRoute);
 app.use("/api/comm", communicationRoute);
 app.use("/api/notification", notificationRoutes);
 app.use("/api/promotion", promoRoute);
