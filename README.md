@@ -44,9 +44,6 @@ A backend-focused project showcasing the implementation of RESTful APIs and CRUD
 - Structured and maintainable codebase.
 - Focus on backend development with added frontend features.
 
-## License
-This project is licensed under the [MIT License](LICENSE).
-
 ---
 
 > **Author:** Samuel Aberra  
